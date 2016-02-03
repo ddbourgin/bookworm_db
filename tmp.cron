@@ -1,3 +1,4 @@
 @reboot /var/www/BookwormDB/startup.sh
 @reboot /var/www/BookwormDB_phonemes/startup.sh
+@reboot /storage/TAL_Pause_phonemes/startup.sh
 @reboot /var/www/TAL_Pause/startup.sh
