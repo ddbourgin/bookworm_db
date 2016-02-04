@@ -14,7 +14,7 @@ sudo apt-get update -y
 sudo apt-get upgrade -y
 sudo apt-get dist-upgrade -y
 sudo apt-get install -y gcc
-sudo apt-get install -y build-essential python-dev libmysqlclient-dev
+sudo apt-get install -y build-essential python-dev libmysqlclient-dev git
 sudo apt-get install -y parallel
 sudo apt-get install -y unzip
 
@@ -126,20 +126,23 @@ echo "user = $keeper" >> .my.cnf
 echo "password = $keeperpass" >> .my.cnf
 echo " " >> .my.cnf
 
+echo "Enter the name for your bookworm database and press [Enter]:"
+read bookw
 
 echo
 echo "Cloning bookworm database"
 echo
-cd /var/www/ && git clone https://github.com/ddbourgin/bookworm_api.git 
+cd /var/www/ && git clone https://github.com/ddbourgin/bookworm_db.git 
 cd ./bookworm_db && mkdir files
+cd ../ && mv bookworm_db "$bookw"
 #cd /var/www/ && git clone https://github.com/Bookworm-project/BookwormDB.git
 #cd ./BookwormDB && git checkout tags/v0.3-alpha && mkdir files
 
 echo
 echo "Cloning bookworm API"
 echo
-cd /usr/lib/cgi-bin && git clone https://github.com/Bookworm-project/BookwormAPI.git
-mv ./BookwormAPI/* ./ && rm -rf ./BookwormAPI
+cd /usr/lib/cgi-bin && git clone https://github.com/ddbourgin/bookworm_api.git
+mv ./bookworm_api/* ./ && rm -rf ./bookworm_api
 chmod -R 755 /usr/lib/cgi-bin && chown -R root.root /usr/lib/cgi-bin
 
 # enable cgi on apache2 and restart
@@ -155,7 +158,8 @@ cd /var/www/
 # cd /var/www/BookwormDB
 echo "Copy the unshortened Dropbox download link to a bookworm zip and press [Enter]:"
 read dropbox
-mkdir ./drop && wget -O "$dropbox" temp.zip
+wget "$dropbox"
+#mkdir ./drop && wget -O "$dropbox" temp.zip
 #unzip temp.zip -d ./drop
 #rm -rf *.zip
 #cd ./drop
@@ -164,8 +168,6 @@ mkdir ./drop && wget -O "$dropbox" temp.zip
 #rm -rf ./drop
 #make all
 
-echo "Re-enter the name of your bookworm database and press [Enter]:"
-read bookw
 
 echo
 echo "Cloning the web app"
@@ -185,3 +187,4 @@ echo "Before everything will be ready, you still need to:"
 echo "    1. Unzip the dropbox bookworm file(s) in /www/var/, move them to the bookworm_db/files directory and run 'sudo make all'"
 echo "    2. Edit /etc/mysql/my.cnf and change the bind-address to 0.0.0.0 (this allows remote access to the databases)"
 echo "    3. Add the line 'user = www-data' under [client] in /etc/mysql/my.cnf"
+echo "    4. (optinal) Create a swapfile if the databases are large"
