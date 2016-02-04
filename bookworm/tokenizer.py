@@ -9,20 +9,36 @@ def wordRegex():
     """
     #I'm including the code to create the regex, which makes it more readable.
     Note that this uses *unicode*: among other things, that means that it needs to be passed
-    a unicode-decoded string: and that we have to use the "regex" module instead of the "re" module. Python3 will make this, perhaps, easier.
+    a unicode-decoded string: and that we have to use the "regex" module instead of the "re" module. 
+    Python3 will make this, perhaps, easier.
     (See how it says import regex as re up there? Yikes.)
     """
-    MasterExpression = ur"\p{L}+"
-    possessive = MasterExpression + ur"'s"
-    numbers = r"(?:[\$])?\d+"
-    decimals = numbers + r"\.\d+"
-    abbreviation = r"(?:mr|ms|mrs|dr|prof|rev|rep|sen|st|sr|jr|ft|gen|adm|lt|col|etc)\."
-    sharps = r"[a-gjxA-GJX]#"
-    punctuators = r"[^\p{L}\p{Z}]"
-    """
-    Note: this compiles looking for the most complicated words first, and as it goes on finds simpler and simpler forms 
-    """
-    bigregex = re.compile("|".join([decimals,possessive,numbers,abbreviation,sharps,punctuators,MasterExpression]),re.UNICODE|re.IGNORECASE)
+    fp = os.path.realpath(__file__)
+    fp = os.path.dirname(fp)
+    fp = os.path.dirname(fp)
+    cnf = os.path.join(fp, 'bookworm.cnf')
+
+    with open(cnf) as ff:
+	for line in ff:
+	    if 'database' in line:
+		bwname = line.split('database = ')[-1]	
+
+    if '_phonemes' in bwname:
+	print('Tokenizing text using the PHONEME regex')
+	bigregex = re.compile(r'\b\w*[^\s]', re.UNICODE|re.IGNORECASE)
+    else:
+	print('Tokenizing text using the WORD regex')
+        MasterExpression = ur"\p{L}+"
+        possessive = MasterExpression + ur"'s"
+        numbers = r"(?:[\$])?\d+"
+        decimals = numbers + r"\.\d+"
+        abbreviation = r"(?:mr|ms|mrs|dr|prof|rev|rep|sen|st|sr|jr|ft|gen|adm|lt|col|etc)\."
+        sharps = r"[a-gjxA-GJX]#"
+        punctuators = r"[^\p{L}\p{Z}]"
+        """
+        Note: this compiles looking for the most complicated words first, and as it goes on finds simpler and simpler forms 
+        """
+        bigregex = re.compile("|".join([decimals,possessive,numbers,abbreviation,sharps,punctuators,MasterExpression]),re.UNICODE|re.IGNORECASE)
     return bigregex
 
 bigregex = wordRegex()
