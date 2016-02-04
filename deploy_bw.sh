@@ -130,7 +130,7 @@ echo " " >> .my.cnf
 echo
 echo "Cloning bookworm database"
 echo
-cd /var/www/ && git clone https://github.com/ddbourgin/bookworm_db.git
+cd /var/www/ && git clone https://github.com/ddbourgin/bookworm_api.git 
 cd ./bookworm_db && mkdir files
 #cd /var/www/ && git clone https://github.com/Bookworm-project/BookwormDB.git
 #cd ./BookwormDB && git checkout tags/v0.3-alpha && mkdir files
@@ -171,7 +171,7 @@ echo
 echo "Cloning the web app"
 echo
 cd /var/www/html && mkdir "$bookw" && cd "$bookw"
-git clone https://github.com/ddbourgin/bookworm_gui
+git clone https://github.com/ddbourgin/bookworm_gui.git
 mv ./bookworm_gui/* ./ && rm -rf ./bookworm_gui
 # git clone https://github.com/Bookworm-project/BookwormGUI.git
 # mv ./BookwormGUI/* ./ && rm -rf ./BookwormGUI
