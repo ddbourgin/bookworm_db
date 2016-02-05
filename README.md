@@ -44,7 +44,7 @@ There are 4 major "moving parts" for the bookworm:
   cd /var/www/
   sudo git clone https://github.com/ddbourgin/bookworm_db.git
   ```
-4. Rename the database to the name of your bookworm, e.g., 
+4. Rename the database to the name of your bookworm database. For example, if your bookworm DB is named `My_BW_DB_Name`, you would run 
   ```shell
   sudo mv bookworm_db My_BW_DB_Name
   ```
@@ -61,28 +61,29 @@ There are 4 major "moving parts" for the bookworm:
   sudo unzip *.zip
   sudo rm *.zip
   ```
-7. Copy the `texts` and `metadata` folders in your unzipped `Bookworm_Data_Folder` to the files directory. We assume here that your data folder is organized as
+7. Copy the `texts` and `metadata` folders in your unzipped `Bookworm_Data_Folder` to the files directory. 
+  - We assume here that your data folder is organized as
   ```
   Bookworm_Data_Folder/
- -- files/
-  | -- texts/
-  |  | input.txt
-  | -- metadata/
-  |  | -- jsoncatalog.txt
-  |  | -- field_descriptions.json
+    -- files/
+      | -- texts/
+      |  | input.txt
+      | -- metadata/
+      |  | -- jsoncatalog.txt
+      |  | -- field_descriptions.json
   ```
-If this is so, then you can simply run the following from the `/var/www/` directory
+  - If this is so, then you can simply run the following from the `/var/www/` directory
   ```shell
   sudo mv Bookworm_Data_Folder/files My_BW_DB_Name/files/
   sudo mv Bookworm_Data_Folder/metadata My_BW_DB_Name/files/
   sudo rm -rf Bookworm_Data_Folder
   ```
-8. To actually construct the database:
-  ```shell
-  cd /var/www/My_BW_DB_Name/
-  sudo make all
-  ```
-10. Follow the on-screen instructions. If all has gone well, this will result in a completed Bookworm database
+8. To actually construct the database
+```shell
+cd /var/www/My_BW_DB_Name/
+sudo make all
+```
+9. Follow the on-screen instructions. If all has gone well, this will result in a completed Bookworm database
 
 ##TODO:
 1. Add code for creating pause and word:pronunciation tables to `CreateDatabase.py`
