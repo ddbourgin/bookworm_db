@@ -69,8 +69,8 @@ There are 4 major "moving parts" for the bookworm:
     | -- texts/
     |  | input.txt
     | -- metadata/
-    |  | -- jsoncatalog.txt
-    |  | -- field_descriptions.json
+    |  | jsoncatalog.txt
+    |  | field_descriptions.json
   ```
   - If this is so, then you can simply run the following from the `/var/www/` directory
   ```shell
