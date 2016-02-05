@@ -45,9 +45,10 @@ There are 4 major "moving parts" for the bookworm:
   cd /var/www/
   sudo git clone https://github.com/ddbourgin/bookworm_db.git
   ```
-4. Rename the database to the name of your bookworm database. For example, if your bookworm DB is named `My_BW_DB_Name`, you would run 
+4. Make a directory `files` in `bookworm_db` and rename the `bookworm_db` directory to your bookworm database name. For example, if your bookworm DB is named `My_BW_DB_Name`, you would run 
   ```shell
-  sudo mv bookworm_db My_BW_DB_Name
+  sudo mkdir /var/www/bookworm_db/files
+  sudo mv /var/www/bookworm_db /var/www/My_BW_DB_Name
   ```
 
 5. Run the script `deploy_bw.sh` in the renamed database directory. This will install the necessary bookworm dependencies and set up the MySQL server/config files for bookworm access.
