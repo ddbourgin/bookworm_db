@@ -41,6 +41,7 @@ There are 4 major "moving parts" for the bookworm:
 
 3. SSH in to the server and clone the [`bookworm_db`](https://github.com/ddbourgin/bookworm_db) repo into `/var/www/`:
   ```shell
+  sudo apt-get install git #if you're using ubuntu
   cd /var/www/
   sudo git clone https://github.com/ddbourgin/bookworm_db.git
   ```
