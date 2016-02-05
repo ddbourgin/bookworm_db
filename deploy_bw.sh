@@ -1,11 +1,3 @@
-#!/bin/bash
-# be sure to run this script with sudo!
-# Manual changes needed:
-#   1. For remote access to database via, e.g., SequelPro, edit /etc/mysql/my.cnf: change the bind-address to 0.0.0.0
-#      Also ensure that permissions for the database are set to allow the user to have remote access via ssh
-#   2. Add a user www-data to [client] in /etc/mysql/my.cnf
-
-
 echo
 echo "Set up the basics"
 echo
@@ -130,15 +122,6 @@ echo "Enter the name for your bookworm database and press [Enter]:"
 read bookw
 
 echo
-echo "Cloning bookworm database"
-echo
-cd /var/www/ && git clone https://github.com/ddbourgin/bookworm_db.git 
-cd ./bookworm_db && mkdir files
-cd ../ && mv bookworm_db "$bookw"
-#cd /var/www/ && git clone https://github.com/Bookworm-project/BookwormDB.git
-#cd ./BookwormDB && git checkout tags/v0.3-alpha && mkdir files
-
-echo
 echo "Cloning bookworm API"
 echo
 cd /usr/lib/cgi-bin && git clone https://github.com/ddbourgin/bookworm_api.git
@@ -151,23 +134,6 @@ echo "Enabling CGI on Apache2 and restarting"
 echo
 a2enmod cgi && service apache2 reload
 
-echo
-echo "Downloading Bookworm data"
-echo
-cd /var/www/
-# cd /var/www/BookwormDB
-echo "Copy the unshortened Dropbox download link to a bookworm zip and press [Enter]:"
-read dropbox
-wget "$dropbox"
-#mkdir ./drop && wget -O "$dropbox" temp.zip
-#unzip temp.zip -d ./drop
-#rm -rf *.zip
-#cd ./drop
-#find . -maxdepth 1 -type d -print -exec mv {} ../files/ \;
-#cd ..
-#rm -rf ./drop
-#make all
-
 
 echo
 echo "Cloning the web app"
@@ -175,16 +141,12 @@ echo
 cd /var/www/html && mkdir "$bookw" && cd "$bookw"
 git clone https://github.com/ddbourgin/bookworm_gui.git
 mv ./bookworm_gui/* ./ && rm -rf ./bookworm_gui
-# git clone https://github.com/Bookworm-project/BookwormGUI.git
-# mv ./BookwormGUI/* ./ && rm -rf ./BookwormGUI
-
-#cp /var/www/bookworm_db/files/*.json ./static/options.json
 
 echo
 echo
 echo "You're almost done!"
 echo "Before everything will be ready, you still need to:"
-echo "    1. Unzip the dropbox bookworm file(s) in /www/var/, move them to the bookworm_db/files directory and run 'sudo make all'"
+echo "    1. Download the bookworm file(s) into /www/var/, move the texts and metadata directories to the bookworm_db/files directory and run 'sudo make all'"
 echo "    2. Edit /etc/mysql/my.cnf and change the bind-address to 0.0.0.0 (this allows remote access to the databases)"
-echo "    3. Add the line 'user = www-data' under [client] in /etc/mysql/my.cnf"
-echo "    4. (optinal) Create a swapfile if the databases are large"
+echo "    3. Add the lines 'user = www-data' and 'password = ' under [client] in /etc/mysql/my.cnf"
+echo "    4. (optional) Create a swapfile before database construction if the database will be large"
