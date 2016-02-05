@@ -66,17 +66,16 @@ There are 4 major "moving parts" for the bookworm:
   - We assume here that your data folder is organized as
   ```
   Bookworm_Data_Folder/
-    -- files/
-      | -- texts/
-      |  | input.txt
-      | -- metadata/
-      |  | -- jsoncatalog.txt
-      |  | -- field_descriptions.json
+    | -- texts/
+    |  | input.txt
+    | -- metadata/
+    |  | -- jsoncatalog.txt
+    |  | -- field_descriptions.json
   ```
   - If this is so, then you can simply run the following from the `/var/www/` directory
   ```shell
-  sudo mv Bookworm_Data_Folder/files My_BW_DB_Name/files/
-  sudo mv Bookworm_Data_Folder/metadata My_BW_DB_Name/files/
+  sudo mv Bookworm_Data_Folder/files My_BW_DB_Name/tests/
+  sudo mv Bookworm_Data_Folder/metadata My_BW_DB_Name/metadata/
   sudo rm -rf Bookworm_Data_Folder
   ```
 8. To actually construct the database
